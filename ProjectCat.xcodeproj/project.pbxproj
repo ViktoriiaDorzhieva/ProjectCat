@@ -14,6 +14,7 @@
 		4D56235F2BF02FE300D5FA64 /* ProjectCatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56235E2BF02FE300D5FA64 /* ProjectCatTests.swift */; };
 		4D5623692BF02FE300D5FA64 /* ProjectCatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5623682BF02FE300D5FA64 /* ProjectCatUITests.swift */; };
 		4D56236B2BF02FE300D5FA64 /* ProjectCatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56236A2BF02FE300D5FA64 /* ProjectCatUITestsLaunchTests.swift */; };
+		4D5623782BF042C000D5FA64 /* CatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5623772BF042C000D5FA64 /* CatEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		4D5623642BF02FE300D5FA64 /* ProjectCatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProjectCatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5623682BF02FE300D5FA64 /* ProjectCatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCatUITests.swift; sourceTree = "<group>"; };
 		4D56236A2BF02FE300D5FA64 /* ProjectCatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCatUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		4D5623772BF042C000D5FA64 /* CatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				4D56234F2BF02FE200D5FA64 /* ContentView.swift */,
 				4D5623512BF02FE300D5FA64 /* Assets.xcassets */,
 				4D5623532BF02FE300D5FA64 /* Preview Content */,
+				4D5623772BF042C000D5FA64 /* CatEntity.swift */,
 			);
 			path = ProjectCat;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D5623502BF02FE200D5FA64 /* ContentView.swift in Sources */,
+				4D5623782BF042C000D5FA64 /* CatEntity.swift in Sources */,
 				4D56234E2BF02FE200D5FA64 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

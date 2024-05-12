@@ -26,6 +26,13 @@ struct ARViewContainer: UIViewRepresentable {
         let model = ModelEntity(mesh: mesh, materials: [material])
         model.transform.translation.y = 0.05
 
+        // create a cat entity
+        CatComponent.registerComponent()
+        CatSystem.registerSystem()
+        let cat = CatEntity()
+        
+        
+        
         // Create horizontal plane anchor for the content
         let anchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: SIMD2<Float>(0.2, 0.2)))
         anchor.children.append(model)
