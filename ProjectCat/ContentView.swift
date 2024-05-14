@@ -32,9 +32,11 @@ struct ARViewContainer: UIViewRepresentable {
 
         // create a cat entity
         let cat = CatEntity()
-        cat.transform.translation.y = 0.05
-        cat.transform.scale = simd_make_float3(0.01, 0.01, 0.01)
         anchor.children.append(cat)
+        
+       
+        
+
         
         // Add the horizontal plane anchor to the scene
         arView.scene.anchors.append(anchor)

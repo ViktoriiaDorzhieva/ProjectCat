@@ -9,6 +9,8 @@ import Foundation
 import RealityKit
 
 class CatEntity: Entity, HasModel {
+    // my class variables
+    
     required init() {
         super.init()
         var meshDescriptor = MeshDescriptor(name: "MyCatMesh")
@@ -20,15 +22,35 @@ class CatEntity: Entity, HasModel {
         guard let meshResource = try? MeshResource.generate(from: [meshDescriptor]) else {
             fatalError("Error creating the mesh")
         }
-        var simpleMaterial = SimpleMaterial(color: .red, isMetallic: false)
+        
+        var imageName = "catWalking"
+        guard let texture = try? TextureResource.load(named: imageName) else {
+            return
+        }
+        
+            //        var simpleMaterial = SimpleMaterial(color: .red, isMetallic: false)
+        var simpleMaterial = UnlitMaterial()
+        simpleMaterial.color = PhysicallyBasedMaterial.BaseColor(texture: .init(texture))
         self.model = ModelComponent(mesh: meshResource, materials: [simpleMaterial])
         self.components[CatComponent.self] = .init()
-    }
+        
+        self.transform.translation.y = 0.05
+        self.transform.scale = simd_make_float3(0.1, 0.1, 0.1)
+        
+//        let transform = Transform(scale: .one, rotation: simd_quatf(), translation: [0.5, 0, 0])
+//        self.move(to: transform, relativeTo: nil, duration: 10, timingFunction: .easeInOut)
+        
+        }
+    
     
     func update() {
         // Put all the update behavior per frame
+//        let transform = Transform(scale: .one, rotation: simd_quatf(), translation: [0.05, 0, 0])
+        self.move(to: transform, relativeTo: nil, duration: 100, timingFunction: .easeInOut)
     }
 }
+
+
 
 class CatComponent: Component {
     init() {
@@ -39,7 +61,6 @@ class CatComponent: Component {
         
     }
 }
-
 
 class CatSystem : System {
     // Define a query to return all entities with a MyComponent.
@@ -59,3 +80,4 @@ class CatSystem : System {
         }
     }
 }
+
