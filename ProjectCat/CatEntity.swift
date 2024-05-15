@@ -29,7 +29,7 @@ class CatEntity: Entity, HasModel {
 //            return
         }
         
-        var imageName = "catWalking"
+        let imageName = "catWalking"
         guard let texture = try? TextureResource.load(named: imageName) else {
             return
         }
@@ -51,8 +51,14 @@ class CatEntity: Entity, HasModel {
     
     func update() {
         // Put all the update behavior per frame
-//        let transform = Transform(scale: .one, rotation: simd_quatf(), translation: [0.05, 0, 0])
+ 
+
+        
+
+        
+//        let transform = Transform(scale: .one, rotation: simd_quatf(), translation: randomVector(length: 0.08)/*[0.05, 0, 0]*/)
 //        self.move(to: transform, relativeTo: nil, duration: 100, timingFunction: .easeInOut)
+    
     }
 }
 
