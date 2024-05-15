@@ -17,10 +17,16 @@ class CatEntity: Entity, HasModel {
         let meshVertices = [simd_make_float3(-1, 1, 0), simd_make_float3(-1, -1, 0), simd_make_float3(1, -1, 0),
                             simd_make_float3(-1, 1, 0), simd_make_float3(1, -1, 0), simd_make_float3(1, 1, 0)]
         meshDescriptor.positions = MeshBuffer(meshVertices)
+        
+        let textureCoords = [simd_make_float2(0,1), simd_make_float2(0,0), simd_make_float2(1,0), simd_make_float2(0,1), simd_make_float2(1,0), simd_make_float2(1,1)]
+        
+        meshDescriptor.textureCoordinates = MeshBuffer(textureCoords)
+        
         let indicesArray = Array(0..<meshVertices.count)
         meshDescriptor.primitives = .triangles(indicesArray.map { UInt32($0)})
         guard let meshResource = try? MeshResource.generate(from: [meshDescriptor]) else {
             fatalError("Error creating the mesh")
+//            return
         }
         
         var imageName = "catWalking"
@@ -46,7 +52,7 @@ class CatEntity: Entity, HasModel {
     func update() {
         // Put all the update behavior per frame
 //        let transform = Transform(scale: .one, rotation: simd_quatf(), translation: [0.05, 0, 0])
-        self.move(to: transform, relativeTo: nil, duration: 100, timingFunction: .easeInOut)
+//        self.move(to: transform, relativeTo: nil, duration: 100, timingFunction: .easeInOut)
     }
 }
 
