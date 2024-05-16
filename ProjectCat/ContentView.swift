@@ -35,20 +35,11 @@ struct ARViewContainer: UIViewRepresentable {
         anchor.children.append(cat)
         
        
-        //        to make it move
-                var transform = Transform()
-                transform.translation.x = 0.5
-      
-        
+ 
         
         // Add the horizontal plane anchor to the scene
         arView.scene.anchors.append(anchor)
         
-        //        to make it move 2
-                DispatchQueue.main.async {
-                    cat.move(to: transform, relativeTo: cat, duration: 10.0)
-                }
-
         return arView
         
     }

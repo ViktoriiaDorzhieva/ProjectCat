@@ -8,8 +8,16 @@
 import Foundation
 import RealityKit
 
+public enum CatStates {
+    case idle
+    case walking
+//    case hiding
+}
+
 class CatEntity: Entity, HasModel {
     // my class variables
+    var catState = CatStates.idle
+    var walkTimer = 0
     
     required init() {
         super.init()
@@ -51,14 +59,30 @@ class CatEntity: Entity, HasModel {
     
     func update() {
         // Put all the update behavior per frame
- 
-
+        switch (catState) {
+        case .idle:
+            walk()
+            break
+        case .walking:
+            startIdle()
+            break
+        }
         
-
-        
-//        let transform = Transform(scale: .one, rotation: simd_quatf(), translation: randomVector(length: 0.08)/*[0.05, 0, 0]*/)
-//        self.move(to: transform, relativeTo: nil, duration: 100, timingFunction: .easeInOut)
-    
+        func walk() {
+            catState = .walking
+            //        to make it move
+            var transform = Transform()
+            transform.translation.x = 0.5
+            
+            self.move(to: transform, relativeTo: self, duration: 5.0)
+        }
+        func startIdle() {
+            catState = . idle
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                walk()
+            }
+            
+        }
     }
 }
 
@@ -93,3 +117,34 @@ class CatSystem : System {
     }
 }
 
+struct BillboardSystem: System {
+    
+    static let query = EntityQuery(where: .has(BillboardComponent.self))
+    
+    init(scene: RealityKit.Scene) {}
+    
+    func update(context: SceneUpdateContext) {
+        context.scene.performQuery(Self.query).forEach {self in
+            
+            guard let billboard = self.components[BillboardComponent.self] else { return }
+
+            let headPosition = ARData.shared.headEntity.transform.translation
+            let entityPosition = self.position(relativeTo: nil)
+            let target = entityPosition - (headPosition - entityPosition)
+            
+            if let upVector = billboard.upVector {
+                self.look(at: target, from: entityPosition, upVector: upVector, relativeTo: nil)
+            } else {
+                self.look(at: target, from: entityPosition, relativeTo: nil)
+            }
+        }
+    }
+}
+    
+struct BillboardComponent: Component {
+    var upVector: Float3?
+       
+       init(upVector: Float3? = nil) {
+           self.upVector = upVector
+       }
+}
