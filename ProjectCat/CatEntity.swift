@@ -7,6 +7,10 @@
 
 import Foundation
 import RealityKit
+import ARKit
+import OSLog
+import simd
+
 
 public enum CatStates {
     case idle
@@ -17,7 +21,10 @@ public enum CatStates {
 class CatEntity: Entity, HasModel {
     // my class variables
     var catState = CatStates.idle
-    var walkTimer = 0
+    var idleTimer: Double = 0
+    var walkTimer: Double = 0
+    var textureCatWalking : PhysicallyBasedMaterial.Texture? = nil
+    var textureCatIdle : PhysicallyBasedMaterial.Texture? = nil
     
     required init() {
         super.init()
@@ -37,14 +44,16 @@ class CatEntity: Entity, HasModel {
 //            return
         }
         
-        let imageName = "catWalking"
-        guard let texture = try? TextureResource.load(named: imageName) else {
+        guard let textureResourceCatWalking = try? TextureResource.load(named: "catWalking") else {
             return
         }
+        textureCatWalking = PhysicallyBasedMaterial.Texture(textureResourceCatWalking)
+        
+        // init idle texture
         
             //        var simpleMaterial = SimpleMaterial(color: .red, isMetallic: false)
         var simpleMaterial = UnlitMaterial()
-        simpleMaterial.color = PhysicallyBasedMaterial.BaseColor(texture: .init(texture))
+        simpleMaterial.color = PhysicallyBasedMaterial.BaseColor(texture: textureCatWalking)
         self.model = ModelComponent(mesh: meshResource, materials: [simpleMaterial])
         self.components[CatComponent.self] = .init()
         
@@ -57,17 +66,27 @@ class CatEntity: Entity, HasModel {
         }
     
     
-    func update() {
+    func update(deltaTime: TimeInterval) {
         // Put all the update behavior per frame
-        switch (catState) {
-        case .idle:
-            walk()
-            break
-        case .walking:
-            startIdle()
-            break
+            switch (catState) {
+            case .idle:
+                idleTimer+=deltaTime
+                if idleTimer>5 {
+                    walk()
+                    idleTimer = 0
+                }
+                break
+                
+            case .walking:
+                walkTimer+=deltaTime
+                if walkTimer>5 {
+                    startIdle()
+                    walkTimer = 0
+                }
+                break
+            }
         }
-        
+    
         func walk() {
             catState = .walking
             //        to make it move
@@ -75,16 +94,21 @@ class CatEntity: Entity, HasModel {
             transform.translation.x = 0.5
             
             self.move(to: transform, relativeTo: self, duration: 5.0)
+            
+            // here swap the texture :
+            // - use the material on the entity (store it in a variable at initialization)
+            // - assign the new texture to the material color
+            //
         }
+    
         func startIdle() {
             catState = . idle
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                walk()
-            }
+            
+            // swap the texture
             
         }
     }
-}
+
 
 
 
@@ -112,39 +136,55 @@ class CatSystem : System {
             guard let myCatEntity = entity as? CatEntity else {
                 fatalError("couldn't cast entity as CatEntity")
             }
-            myCatEntity.update()
+            myCatEntity.update(deltaTime: context.deltaTime)
         }
     }
 }
 
-struct BillboardSystem: System {
-    
-    static let query = EntityQuery(where: .has(BillboardComponent.self))
-    
-    init(scene: RealityKit.Scene) {}
-    
-    func update(context: SceneUpdateContext) {
-        context.scene.performQuery(Self.query).forEach {self in
-            
-            guard let billboard = self.components[BillboardComponent.self] else { return }
-
-            let headPosition = ARData.shared.headEntity.transform.translation
-            let entityPosition = self.position(relativeTo: nil)
-            let target = entityPosition - (headPosition - entityPosition)
-            
-            if let upVector = billboard.upVector {
-                self.look(at: target, from: entityPosition, upVector: upVector, relativeTo: nil)
-            } else {
-                self.look(at: target, from: entityPosition, relativeTo: nil)
-            }
-        }
-    }
-}
-    
-struct BillboardComponent: Component {
-    var upVector: Float3?
-       
-       init(upVector: Float3? = nil) {
-           self.upVector = upVector
-       }
-}
+///// The component that marks an entity as a billboard object which will always face the camera.
+//public struct BillboardComponent: Component, Codable {
+//    public init() {
+//    }
+//}
+//
+///// An ECS system that points all entities containing a billboard component at the camera.
+//public struct BillboardSystem: System {
+//    
+//    static let query = EntityQuery(where: .has(cat.BillboardComponent.self))
+//    
+//    private let arkitSession = ARKitSession()
+//    private let worldTrackingProvider = WorldTrackingProvider()
+//    
+//    public init(scene: RealityKit.Scene) {
+//        setUpSession()
+//    }
+//    
+//    func setUpSession() {
+//        
+//        Task {
+//            do {
+//                try await arkitSession.run([worldTrackingProvider])
+//            } catch {
+//                os_log(.info, "Error: \(error)")
+//            }
+//        }
+//    }
+//    
+//    public func update(context: SceneUpdateContext) {
+//        
+//        let entities = context.scene.performQuery(Self.query).map({ $0 })
+//        
+//        guard !entities.isEmpty,
+//              let pose = worldTrackingProvider.queryDeviceAnchor(atTimestamp: CACurrentMediaTime()) else { return }
+//        
+//        let cameraTransform = Transform(matrix: pose.originFromAnchorTransform)
+//        
+//        for entity in entities {
+//            entity.look(at: cameraTransform.translation,
+//                        from: entity.scenePosition,
+//                        relativeTo: nil,
+//                        forward: .positiveZ)
+//        }
+//    }
+//}
+//
