@@ -1,5 +1,5 @@
 # Walking cat
-ProjectCat is an iOS augmented reality (AR) app developed using Apple's RealityKit and ARKit frameworks. The app features a 2D cat that walks on the horizontal plane, showcasing movement behavior, animation, and texture switching. This project serves as a learning exercise to understand the basics of RealityKit, Swift, and SwiftUI.
+ProjectCat is an iOS augmented reality (AR) app developed using Apple's SwiftUI, RealityKit and ARKit frameworks. The app features a 2D cat that walks on the horizontal plane, showcasing movement behavior, animation, and texture switching. This project serves as a learning exercise to understand the basics of RealityKit, ARKit, SwiftUI and practice with Swift programming language.
 
 ## Project Description
 
@@ -14,7 +14,6 @@ This project implements several features to create a  AR experience:<br/>
 - Idle Function: Changes the cat's texture to an idle image when the cat is not moving.<br/>
 - Walking Function: Changes the cat's texture to a walking image and assigns a random direction for movement.<br/>
 
-!placeholder for pictures here!
 
 ## Setup 
 
@@ -23,7 +22,7 @@ Prerequisites <br/>
 - An iOS device with AR capabilities (ARKit compatible).<br/>
 <br/>
 
-Tech used <br/>
+Environment <br/>
 - macOS 15.3<br/>
 - iOS 17.4.1<br/> 
 - Xcode 15.3<br/> 
