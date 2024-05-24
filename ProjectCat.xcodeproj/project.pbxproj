@@ -15,6 +15,7 @@
 		4D5623692BF02FE300D5FA64 /* ProjectCatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5623682BF02FE300D5FA64 /* ProjectCatUITests.swift */; };
 		4D56236B2BF02FE300D5FA64 /* ProjectCatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56236A2BF02FE300D5FA64 /* ProjectCatUITestsLaunchTests.swift */; };
 		4D5623782BF042C000D5FA64 /* CatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5623772BF042C000D5FA64 /* CatEntity.swift */; };
+		4D586C8F2BFEF9120094DAB3 /* catPurr.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4D586C8E2BFEF9120094DAB3 /* catPurr.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		4D5623682BF02FE300D5FA64 /* ProjectCatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCatUITests.swift; sourceTree = "<group>"; };
 		4D56236A2BF02FE300D5FA64 /* ProjectCatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCatUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4D5623772BF042C000D5FA64 /* CatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatEntity.swift; sourceTree = "<group>"; };
+		4D586C8E2BFEF9120094DAB3 /* catPurr.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = catPurr.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				4D5623512BF02FE300D5FA64 /* Assets.xcassets */,
 				4D5623532BF02FE300D5FA64 /* Preview Content */,
 				4D5623772BF042C000D5FA64 /* CatEntity.swift */,
+				4D586C8E2BFEF9120094DAB3 /* catPurr.mp3 */,
 			);
 			path = ProjectCat;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D586C8F2BFEF9120094DAB3 /* catPurr.mp3 in Resources */,
 				4D5623552BF02FE300D5FA64 /* Preview Assets.xcassets in Resources */,
 				4D5623522BF02FE300D5FA64 /* Assets.xcassets in Resources */,
 			);
