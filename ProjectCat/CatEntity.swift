@@ -32,6 +32,9 @@ class CatEntity: Entity, HasModel {
     var randomX:Float = 0
     var randomZ:Float = 0
     
+    var audioPlayer: AVAudioPlayer?
+    
+    
     required init() {
         super.init()
         var meshDescriptor = MeshDescriptor(name: "MyCatMesh")
@@ -75,6 +78,16 @@ class CatEntity: Entity, HasModel {
         self.transform.translation.y = 0.05
         self.transform.scale = simd_make_float3(0.1, 0.1, 0.1)
         
+        // Load the sound file
+        if let soundURL = Bundle.main.url(forResource: "catPurr", withExtension: "mp3") {
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+                audioPlayer?.prepareToPlay()
+            } catch {
+                print("Failed to load sound file: \(error)")
+            }
+        }
+        
     }
     
     
@@ -99,6 +112,8 @@ class CatEntity: Entity, HasModel {
             break
         }
         
+    }
+        
         //        let scale = 0.01
         //        let offset = sin(time) * scale
         //        self.transform.translation = self.transform.translation + SIMD3<float>(0, offset, 0)
@@ -109,6 +124,9 @@ class CatEntity: Entity, HasModel {
             randomZ = Float.random(in: -2..<2)
             
             catState = .walking
+            
+            audioPlayer?.stop()
+            
             //        to make it move
             var transform = Transform()
             
@@ -130,79 +148,82 @@ class CatEntity: Entity, HasModel {
         
         func startIdle() {
             catState = . idle
-            _ = SKAction.playSoundFileNamed("catPurr", waitForCompletion: false)
-            guard let baseColorIdle = self.baseColorIdle else {
-                return
-            }
-            self.simpleMaterial.baseColor = baseColorIdle
-            self.model?.materials = [simpleMaterial]
             
-        }
-    }
-    
-    
-    
-    
-    class CatComponent: Component {
-        init() {
-            CatSystem.registerSystem()
-        }
-        
-        func update() {
-            
-        }
-    }
-    
-    class CatSystem : System {
-        // Define a query to return all entities with a MyComponent.
-        private static let query = EntityQuery(where: .has(CatComponent.self))
-        
-        // Initializer is required. Use an empty implementation if there's no setup needed.
-        required init(scene: Scene) { }
-        
-        // Iterate through all entities containing a MyComponent.
-        func update(context: SceneUpdateContext) {
-            context.scene.performQuery(Self.query).forEach { entity in
-                // Make per-frame changes to each entity here.
-                guard let myCatEntity = entity as? CatEntity else {
-                    fatalError("couldn't cast entity as CatEntity")
+            audioPlayer?.play()
+                
+                guard let baseColorIdle = self.baseColorIdle else {
+                    return
                 }
-                myCatEntity.update(deltaTime: context.deltaTime)
+                self.simpleMaterial.baseColor = baseColorIdle
+                self.model?.materials = [simpleMaterial]
+                
             }
         }
-    }
+        
+        
+        
+        
+        class CatComponent: Component {
+            init() {
+                CatSystem.registerSystem()
+            }
+            
+            func update() {
+                
+            }
+        }
+        
+        class CatSystem : System {
+            // Define a query to return all entities with a MyComponent.
+            private static let query = EntityQuery(where: .has(CatComponent.self))
+            
+            // Initializer is required. Use an empty implementation if there's no setup needed.
+            required init(scene: Scene) { }
+            
+            // Iterate through all entities containing a MyComponent.
+            func update(context: SceneUpdateContext) {
+                context.scene.performQuery(Self.query).forEach { entity in
+                    // Make per-frame changes to each entity here.
+                    guard let myCatEntity = entity as? CatEntity else {
+                        fatalError("couldn't cast entity as CatEntity")
+                    }
+                    myCatEntity.update(deltaTime: context.deltaTime)
+                }
+            }
+        }
+        
+        /// The component that marks an entity as a billboard object which will always face the camera.
+        //public struct BillboardComponent: Component, Codable {
+        //    public init() {
+        //    }
+        //}
+        
+        ///// An ECS system that points all entities containing a billboard component at the camera.
+        //public struct BillboardSystem: System {
+        //
+        //    static let query = EntityQuery(where: .has(BillboardComponent.self))
+        //
+        //
+        //    public init(scene: RealityKit.Scene) {
+        //
+        //    }
+        //
+        //
+        //
+        //    public func update(context: SceneUpdateContext) {
+        //
+        //        let entities = context.scene.performQuery(Self.query).map({ $0 })
+        //
+        //
+        //        for cat in entities {
+        //            cat.look(at: cameraTransform.translation,
+        //                        from: cat.scenePosition,
+        //                        relativeTo: nil,
+        //                        forward: .positiveZ)
+        //        }
+        //    }
+        //}
+        //
+        
     
-    /// The component that marks an entity as a billboard object which will always face the camera.
-    //public struct BillboardComponent: Component, Codable {
-    //    public init() {
-    //    }
-    //}
-    
-    ///// An ECS system that points all entities containing a billboard component at the camera.
-    //public struct BillboardSystem: System {
-    //
-    //    static let query = EntityQuery(where: .has(BillboardComponent.self))
-    //
-    //
-    //    public init(scene: RealityKit.Scene) {
-    //
-    //    }
-    //
-    //
-    //
-    //    public func update(context: SceneUpdateContext) {
-    //
-    //        let entities = context.scene.performQuery(Self.query).map({ $0 })
-    //
-    //
-    //        for cat in entities {
-    //            cat.look(at: cameraTransform.translation,
-    //                        from: cat.scenePosition,
-    //                        relativeTo: nil,
-    //                        forward: .positiveZ)
-    //        }
-    //    }
-    //}
-    //
-    
-}
+
