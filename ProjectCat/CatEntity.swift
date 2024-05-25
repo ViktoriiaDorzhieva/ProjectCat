@@ -24,10 +24,10 @@ class CatEntity: Entity, HasModel {
     var idleTimer: Double = 0
     var walkTimer: Double = 0
     
-    var baseColorIdle: UnlitMaterial.BaseColor? = nil
-    var baseColorWalking: UnlitMaterial.BaseColor? = nil
+    var baseColorIdle: PhysicallyBasedMaterial.BaseColor? = nil
+    var baseColorWalking: PhysicallyBasedMaterial.BaseColor? = nil
     
-    var simpleMaterial = UnlitMaterial()
+    var simpleMaterial = PhysicallyBasedMaterial()
     var randomDouble: Double = 0
     var randomX:Float = 0
     var randomZ:Float = 0
@@ -59,13 +59,15 @@ class CatEntity: Entity, HasModel {
         let textureCatWalking = PhysicallyBasedMaterial.Texture(textureResourceCatWalking)
         let textureCatIdle = PhysicallyBasedMaterial.Texture(textureResourceCatIdle)
         
-        self.baseColorIdle = UnlitMaterial.BaseColor(texture: textureCatIdle)
-        self.baseColorWalking = UnlitMaterial.BaseColor(texture: textureCatWalking)
+        self.baseColorIdle = PhysicallyBasedMaterial.BaseColor(texture: textureCatIdle)
+        self.baseColorWalking = PhysicallyBasedMaterial.BaseColor(texture: textureCatWalking)
         
         guard let baseColorIdle = self.baseColorIdle else {
             return
         }
-        self.simpleMaterial.color = baseColorIdle
+        self.simpleMaterial.baseColor = baseColorIdle
+        
+        self.simpleMaterial.blending = .transparent(opacity: .init(1.0)) // Set blending mode to transparent
         
         self.model = ModelComponent(mesh: meshResource, materials: [simpleMaterial])
         self.components[CatComponent.self] = .init()
@@ -118,7 +120,10 @@ class CatEntity: Entity, HasModel {
             guard let baseColorWalking = self.baseColorWalking else {
                 return
             }
-            self.simpleMaterial.color = baseColorWalking
+            self.simpleMaterial.baseColor = baseColorWalking
+            
+            self.simpleMaterial.blending = .transparent(opacity: .init(1.0)) // Ensure transparency
+            
             self.model?.materials = [simpleMaterial]
             
         }
@@ -129,7 +134,7 @@ class CatEntity: Entity, HasModel {
             guard let baseColorIdle = self.baseColorIdle else {
                 return
             }
-            self.simpleMaterial.color = baseColorIdle
+            self.simpleMaterial.baseColor = baseColorIdle
             self.model?.materials = [simpleMaterial]
             
         }
