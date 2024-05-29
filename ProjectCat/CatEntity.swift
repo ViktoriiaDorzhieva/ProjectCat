@@ -33,7 +33,9 @@ class CatEntity: Entity, HasModel {
     var randomZ:Float = 0
     
     var audioPlayer: AVAudioPlayer?
+    var time: Float = 0
     
+    var offset: Float = 0
     
     required init() {
         super.init()
@@ -93,6 +95,17 @@ class CatEntity: Entity, HasModel {
     
     func update(deltaTime: TimeInterval) {
         randomDouble = Double.random(in: 3..<10)
+        
+//        time += Float(deltaTime)
+//        let scale: Float = 0.01
+//        offset = sin(time) * scale
+//        self.transform.translation = self.transform.translation + SIMD3<Float>(0, offset, 0)
+////        self.transform.translation.y = offset
+//        self.transform.translation.y = 0.05 + offset
+
+
+        
+        
         // Put all the update behavior per frame
         switch (catState) {
         case .idle:
@@ -114,15 +127,18 @@ class CatEntity: Entity, HasModel {
         
     }
         
-        //        let scale = 0.01
-        //        let offset = sin(time) * scale
-        //        self.transform.translation = self.transform.translation + SIMD3<float>(0, offset, 0)
-        //        }
+    
+                
         
+    
         func walk() {
             randomX = Float.random(in: -2..<2)
             randomZ = Float.random(in: -2..<2)
             
+//            randomX = Float.random(in: -0.5..<0.5)
+//            randomZ = Float.random(in: -0.5..<0.5)
+            
+
             catState = .walking
             
             audioPlayer?.stop()
@@ -130,8 +146,9 @@ class CatEntity: Entity, HasModel {
             //        to make it move
             var transform = Transform()
             
+//            transform.translation = SIMD3<Float>(x: randomX, y: 0, z: randomZ)
             transform.translation = SIMD3<Float>(x: randomX, y: 0, z: randomZ)
-            
+
             
             self.move(to: transform, relativeTo: self, duration: randomDouble)
             
