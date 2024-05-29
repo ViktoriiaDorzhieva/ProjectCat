@@ -25,7 +25,9 @@ class CatEntity: Entity, HasModel {
     var walkTimer: Double = 0
     
     var baseColorIdle: PhysicallyBasedMaterial.BaseColor? = nil
-    var baseColorWalking: PhysicallyBasedMaterial.BaseColor? = nil
+    var baseColorWalkingLeft: PhysicallyBasedMaterial.BaseColor? = nil
+    var baseColorWalkingRight: PhysicallyBasedMaterial.BaseColor? = nil
+
     
     var simpleMaterial = PhysicallyBasedMaterial()
     var randomDouble: Double = 0
@@ -33,9 +35,12 @@ class CatEntity: Entity, HasModel {
     var randomZ:Float = 0
     
     var audioPlayer: AVAudioPlayer?
-    var time: Float = 0
     
-    var offset: Float = 0
+    var textureSwitchTimer: Double = 0
+    var isUsingLeftTexture: Bool = true
+    
+//    var time: Float = 0
+//    var offset: Float = 0
     
     required init() {
         super.init()
@@ -56,16 +61,20 @@ class CatEntity: Entity, HasModel {
         }
         
         guard let textureResourceCatIdle = try? TextureResource.load(named: "catLaying"),
-              let textureResourceCatWalking = try? TextureResource.load(named: "catLeft")
+              let textureResourceCatWalkingLeft = try? TextureResource.load(named: "catLeft"),
+              let textureResourceCatWalkingRight = try? TextureResource.load(named: "catRight")
         else {
             return
         }
         
-        let textureCatWalking = PhysicallyBasedMaterial.Texture(textureResourceCatWalking)
         let textureCatIdle = PhysicallyBasedMaterial.Texture(textureResourceCatIdle)
+        let textureCatWalkingLeft = PhysicallyBasedMaterial.Texture(textureResourceCatWalkingLeft)
+        let textureCatWalkingRight = PhysicallyBasedMaterial.Texture(textureResourceCatWalkingRight)
         
         self.baseColorIdle = PhysicallyBasedMaterial.BaseColor(texture: textureCatIdle)
-        self.baseColorWalking = PhysicallyBasedMaterial.BaseColor(texture: textureCatWalking)
+        self.baseColorWalkingLeft = PhysicallyBasedMaterial.BaseColor(texture: textureCatWalkingLeft)
+        self.baseColorWalkingRight = PhysicallyBasedMaterial.BaseColor(texture: textureCatWalkingRight)
+
         
         guard let baseColorIdle = self.baseColorIdle else {
             return
@@ -118,6 +127,13 @@ class CatEntity: Entity, HasModel {
             
         case .walking:
             walkTimer+=deltaTime
+            textureSwitchTimer += deltaTime
+            
+            if textureSwitchTimer > 0.5 {
+                switchWalkingTexture()
+                textureSwitchTimer = 0
+            }
+            
             if walkTimer>randomDouble {
                 startIdle()
                 walkTimer = 0
@@ -143,26 +159,44 @@ class CatEntity: Entity, HasModel {
             
             audioPlayer?.stop()
             
+            
+            textureSwitchTimer = 0
+            isUsingLeftTexture = true
+            
+            guard let baseColorWalkingLeft = self.baseColorWalkingLeft else {
+                return
+            }
+            
+            self.simpleMaterial.baseColor = baseColorWalkingLeft
+            self.model?.materials = [simpleMaterial]
+            
             //        to make it move
             var transform = Transform()
             
 //            transform.translation = SIMD3<Float>(x: randomX, y: 0, z: randomZ)
             transform.translation = SIMD3<Float>(x: randomX, y: 0, z: randomZ)
-
-            
             self.move(to: transform, relativeTo: self, duration: randomDouble)
             
-            guard let baseColorWalking = self.baseColorWalking else {
-                return
-            }
-            self.simpleMaterial.baseColor = baseColorWalking
             
             self.simpleMaterial.blending = .transparent(opacity: .init(1.0)) // Ensure transparency
-            
-            self.model?.materials = [simpleMaterial]
-            
         }
         
+    func switchWalkingTexture() {
+            if isUsingLeftTexture {
+                guard let baseColorWalkingRight = self.baseColorWalkingRight else {
+                    return
+                }
+                self.simpleMaterial.baseColor = baseColorWalkingRight
+            } else {
+                guard let baseColorWalkingLeft = self.baseColorWalkingLeft else {
+                    return
+                }
+                self.simpleMaterial.baseColor = baseColorWalkingLeft
+            }
+            isUsingLeftTexture.toggle()
+            self.model?.materials = [simpleMaterial]
+        }
+    
         func startIdle() {
             catState = . idle
             
