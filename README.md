@@ -13,6 +13,7 @@ This project implements several features to create a  AR experience:<br/>
 - Random Timer: Implemented a variable that generates a random number used to set a timer, determining the duration of each state.<br/>
 - Idle Function: Changes the cat's texture to an idle image when the cat is not moving.<br/>
 - Walking Function: Changes the cat's texture to a walking image and assigns a random direction for movement.<br/>
+- Audio: audio plays when cat is in the idle state
 
 
 ## Setup 
