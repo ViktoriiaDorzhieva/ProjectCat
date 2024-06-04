@@ -42,7 +42,7 @@ Running the App<br/>
 
 ## Learning Outcomes
 
-- Master the basics of RealityKit for AR development.<br/> 
-- Develop skills in Swift and SwiftUI.<br/> 
-- Implement interactive and animated AR experiences.<br/> 
-- Understand texture management and state-based animations in RealityKit.<br/> 
+- Mastered the basics of RealityKit for AR development.<br/> 
+- Developed skills in Swift and SwiftUI.<br/> 
+- Implemented interactive and animated AR experiences.<br/> 
+- Learned texture management and state-based animations in RealityKit.<br/> 
