@@ -45,4 +45,16 @@ Running the App<br/>
 - Mastered the basics of RealityKit for AR development.<br/> 
 - Developed skills in Swift and SwiftUI.<br/> 
 - Implemented interactive and animated AR experiences.<br/> 
-- Learned texture management and state-based animations in RealityKit.<br/> 
+- Learned texture management and state-based animations in RealityKit.<br/>
+
+# Test case
+
+Summary<br/>
+The image of a cat dissapears after reopening the app multiple times. 
+Description<br/>
+1. Open the app.<br/>
+2. Find horizontal plane for cat to appear.<br/>
+3. Close and open running app 
+Expected results<br/>
+Attachment<br/>
+
