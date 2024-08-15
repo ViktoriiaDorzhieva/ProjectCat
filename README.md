@@ -50,14 +50,21 @@ Running the App<br/>
 # Test case
 
 Summary<br/>
-The image of a cat dissapears after reopening the app multiple times. 
+The image of the cat disappears after reopening the app multiple times.<br/>
+
 Description<br/>
 1. Open the app.<br/>
-2. Find horizontal plane for cat to appear.<br/>
-3. Close and open running app 
+2. Find a horizontal plane for the cat to appear.<br/>
+3. Close and open the running app multiple times. <br/>
+
 Expected results<br/>
-The cat image is stable and stays on the place after reopening
+The cat image is stable and stays on the place after reopening.<br/>
+
 Attachment<br/>
-![](walkingCatBug.gif)
+
+![](walkingCatBug.gif)<br/>
+
 Jira bug report<br/>
+
+![jiraBugReport](https://github.com/user-attachments/assets/e23bafed-eac7-4957-9fca-ad0e6cea021a)
 
