@@ -56,5 +56,8 @@ Description<br/>
 2. Find horizontal plane for cat to appear.<br/>
 3. Close and open running app 
 Expected results<br/>
+The cat image is stable and stays on the place after reopening
 Attachment<br/>
+![](walkingCatBug.gif)
+Jira bug report<br/>
 
