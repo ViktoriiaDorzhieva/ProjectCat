@@ -98,6 +98,7 @@ Environment <br/>
 
 Attachment<br/>
 
+![](catBugPlane.gif)<br/>
 
 Jira bug report<br/>
 
