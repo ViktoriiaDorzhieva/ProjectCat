@@ -47,7 +47,9 @@ Running the App<br/>
 - Implemented interactive and animated AR experiences.<br/> 
 - Learned texture management and state-based animations in RealityKit.<br/>
 
-# Test case
+# Testing
+
+## Test case 1
 
 Summary<br/>
 The image of the cat disappears after reopening the app multiple times.<br/>
@@ -66,5 +68,29 @@ Attachment<br/>
 
 Jira bug report<br/>
 
-![jiraBugReport](https://github.com/user-attachments/assets/e23bafed-eac7-4957-9fca-ad0e6cea021a)
+![jiraBugReport](https://github.com/user-attachments/assets/e23bafed-eac7-4957-9fca-ad0e6cea021a)<br/>
+
+## Test case 2
+
+Summary<br/>
+When pointing on a vertical plane, the cat audio can be heard but the cat is not visible until camera is pointed on a horizontal plane. <br/>
+
+Description<br/>
+1. Open the app.<br/>
+2. Find a vertical plane.<br/>
+3. Turn on the volume on the device.<br/>
+4. Wait for the sound.<br/>
+
+Expected results<br/>
+The cat and the sound must appear only on a horizontal plane.<br/>
+
+Jira bug report<br/>
+
+![jiraBugVerticalPlane](https://github.com/user-attachments/assets/7e425b37-f0e9-4caf-8e02-d7292a37fa56)<br/>
+
+
+
+
+
+
 
