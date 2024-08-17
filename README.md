@@ -24,7 +24,7 @@ Prerequisites <br/>
 <br/>
 
 Environment <br/>
-- macOS 15.3<br/>
+- macOS Sonoma 14.4.1<br/>
 - iOS 17.4.1<br/> 
 - Xcode 15.3<br/> 
 <br/>
@@ -63,7 +63,7 @@ Expected results<br/>
 The cat image is stable and stays on the place after reopening.<br/>
 
 Environment <br/>
-- macOS 15.3<br/>
+- macOS Sonoma 14.4.1 <br/>
 - iOS 17.4.1<br/> 
 - Xcode 15.3<br/> 
 <br/>
@@ -91,7 +91,7 @@ Expected results<br/>
 The cat and the sound must appear only on a horizontal plane.<br/>
 
 Environment <br/>
-- macOS 15.3<br/>
+- macOS Sonoma 14.4.1<br/>
 - iOS 17.6.1<br/> 
 - Xcode 15.3<br/> 
 <br/>
